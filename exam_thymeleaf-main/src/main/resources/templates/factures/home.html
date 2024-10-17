@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Les factures</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.main.css}">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light" th:include="parts/fragments :: my-menu"></nav>
+
+<div class="container">
+    <div class="w-100 text-center">
+        <div class="row">
+            <div class="col-sm-6" th:each="facture : ${factures}">
+                <div class="card mb-4 shadow border-success" th:class="${facture.datePayment == null} ? 'border-danger' : 'border-success'">
+                    <div class="card-body">
+                        <p class="card-text">
+                            <strong>Client:</strong>
+                            <span th:text="${facture.client.id}">Client ID</span><br/>
+                            <strong>Emetteur:</strong>
+                            <span th:text="${facture.emeteur.id}">Emetteur ID</span><br/>
+                            <strong>A régler:</strong>
+                            <span th:text="${facture.datePayment == null} ? 'Non payé' : 'Payé'">Non payé</span><br/>
+                            <strong>Réglé le :</strong>
+                            <span th:text="${#dates.format(facture.dateFacture.getTime(), 'dd/MM/yyyy')}">Date</span><br/>
+                        </p>
+                        <div>
+                            <a th:href="@{/detail/{id}(id=${facture.id})}" class="btn btn-success">Voir la facture!</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    </div>
+</div>
+
+<div th:insert="parts/fragments :: footer"></div>
+
+<script type="text/javascript" th:src="@{/js/bootstrap.main.js}"></script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Détails des lignes de factures</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.main.css}">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light"
+     th:include="parts/fragments :: my-menu">
+</nav>
+
+<div class="container">
+    <h1 th:utext="'Les factures > Facture n ' + ${facture.id} + ' > les lignes'"></h1>
+
+    <div class="d-flex justify-content-end mb-4 em-3">
+        <a th:href="@{/ligne/{idFacture}/add(idFacture=${facture.id})}">
+            <button class="btn btn-success em-3">Ajouter une ligne</button>
+        </a>
+
+
+    </div>
+
+    <table th:unless="${facture.lignes.isEmpty()}" class="table">
+        <thead>
+        <tr>
+            <th scope="col">Quantité</th>
+            <th scope="col">Description</th>
+            <th scope="col">Prix HT</th>
+            <th scope="col">TVA</th>
+        </tr>
+        </thead>
+        <tbody>
+        <th:block th:each="line : ${facture.lignes}">
+            <tr>
+                <td th:text="${line.quantity}">Quantité</td>
+                <td th:text="${line.designation}">Description</td>
+                <td th:text="${line.prixHt}">Prix HT</td>
+                <td th:text="${line.tva.taux}">TVA</td>
+            </tr>
+        </th:block>
+        </tbody>
+    </table>
+
+    <div th:insert="parts/fragments :: footer"></div>
+</div>
+<script type="text/javascript" th:src="@{/js/bootstrap.main.js}"></script>
+</body>
+</html>

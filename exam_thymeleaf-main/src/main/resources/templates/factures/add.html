@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ajouter une ligne à la facture</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.main.css}">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light" th:include="parts/fragments :: my-menu"></nav>
+
+<div class="container">
+    <h1 th:utext="'Les factures > Facture n ' + ${facture.id} + ' > Les lignes > Ajout'"></h1>
+
+    <form th:object="${ligneFacture}" method="post">
+        <div class="row">
+            <div class="form-group col-12">
+                <label for="designation" class="form-label">Description</label>
+                <input
+                        th:field="*{designation}"
+                        type="text"
+                        th:class="${#fields.hasErrors('designation')} ? 'is-invalid form-control' : 'form-control'"
+                        id="designation"
+                        placeholder="Entrez la désignation"
+                >
+                <div th:if="${#fields.hasErrors('designation')}" th:errors="*{designation}" class="invalid-feedback"></div>
+            </div>
+
+            <div class="form-group col-6">
+                <label for="quantity" class="form-label">Quantité</label>
+                <input
+                        th:field="*{quantity}"
+                        type="number"
+                        step="0.01"
+                        th:class="${#fields.hasErrors('quantity')} ? 'is-invalid form-control' : 'form-control'"
+                        id="quantity"
+                        placeholder="Entrez la quantité"
+                >
+                <div th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}" class="invalid-feedback"></div>
+            </div>
+
+            <div class="form-group col-6">
+                <label for="prixHt" class="form-label">Prix HT</label>
+                <input
+                        th:field="*{prixHt}"
+                        type="number"
+                        step="0.01"
+                        th:class="${#fields.hasErrors('prixHt')} ? 'is-invalid form-control' : 'form-control'"
+                        id="prixHt"
+                        placeholder="Entrez le prix HT"
+                >
+                <div th:if="${#fields.hasErrors('prixHt')}" th:errors="*{prixHt}" class="invalid-feedback"></div>
+            </div>
+
+            <div class="form-group col-6">
+                <label for="tva" class="form-label">TVA</label>
+                <select th:field="*{tva}" class="form-control"  id="tva">
+                    <option th:each="tva : ${tvas}" th:value="${tva.id}" th:text="${tva.taux}"></option>
+                </select>
+                <div th:if="${#fields.hasErrors('tva')}" th:errors="*{tva}" class="invalid-feedback"></div>
+            </div>
+        </div>
+
+
+        <button class="btn btn-success w-100 mt-4" type="submit">Enregistrer</button>
+    </form>
+
+    <a th:href="@{/ligne/{idFacture}(idFacture=${ligneFacture.facture.id})}">
+        <button class="btn btn-secondary mt-3">Retour à la facture</button>
+    </a>
+</div>
+
+<div th:insert="parts/fragments :: footer"></div>
+
+<script type="text/javascript" th:src="@{/js/bootstrap.main.js}"></script>
+</body>
+</html>
