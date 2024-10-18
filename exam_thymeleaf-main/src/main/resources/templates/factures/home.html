@@ -17,9 +17,9 @@
                     <div class="card-body">
                         <p class="card-text">
                             <strong>Client:</strong>
-                            <span th:text="${facture.client.id}">Client ID</span><br/>
+                            <span th:text="${facture.client.raisonSociale}">Client ID</span><br/>
                             <strong>Emetteur:</strong>
-                            <span th:text="${facture.emeteur.id}">Emetteur ID</span><br/>
+                            <span th:text="${facture.emeteur.raisonSociale}">Emetteur ID</span><br/>
                             <strong>A régler:</strong>
                             <span th:text="${facture.datePayment == null} ? 'Non payé' : 'Payé'">Non payé</span><br/>
                             <strong>Réglé le :</strong>
